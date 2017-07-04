@@ -113,7 +113,8 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.CommandResponse.FAIL
 
 
-def new(command: hints.Command, arg0: int=0, arg1: int=0, data_length: int=0, data_checksum: int=0, magic: int=0):
+def new(command: hints.Command, arg0: int = 0, arg1: int = 0,  # pylint: disable=too-many-arguments
+        data_length: int = 0, data_checksum: int = 0, magic_: int = 0) -> Header:
     """
     Create a new :class:`~adbwp.header.Header` instance with optional default values.
 
@@ -127,12 +128,12 @@ def new(command: hints.Command, arg0: int=0, arg1: int=0, data_length: int=0, da
     :type data_length: :class:`~int`
     :param data_checksum: (Optional) Computed checksum of the payload
     :type data_checksum: :class:`~int`
-    :param magic: (Optional) "Magic" XOR of the command
-    :type magic: :class:`~int`
+    :param magic_: (Optional) "Magic" XOR of the command
+    :type magic_: :class:`~int`
     :return: Header instance created from values
     :rtype: :class:`~adbwp.header.Header`
     """
-    return Header(command, arg0, arg1, data_length, data_checksum, magic)
+    return Header(command, arg0, arg1, data_length, data_checksum, magic_)
 
 
 def magic(command: hints.Command) -> int:
@@ -186,8 +187,8 @@ def from_bytes(header: bytes) -> Header:
     :raises :class:`~adbwp.exceptions.UnpackError` when unable to unpack instance from 6 bytes
     """
     try:
-        command, arg0, arg1, data_length, data_checksum, magic = struct.unpack(HEADER_FORMAT, header)
+        command, *args = struct.unpack(HEADER_FORMAT, header)
     except struct.error:
         raise exceptions.UnpackError('Failed to unpack header from bytes')
     else:
-        return new(enums.Command(command), arg0, arg1, data_length, data_checksum, magic)
+        return new(enums.Command(command), *args)
