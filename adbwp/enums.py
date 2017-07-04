@@ -20,7 +20,7 @@ class Command(enum.IntEnum):
     WRTE = 0x45545257
 
 
-class CommandResponse(enum.Enum):
+class CommandResponse(enum.Enum):  # pylint: disable=too-few-public-methods
     """
     Enumeration for response message types from ADB connection requests.
     """
@@ -37,7 +37,7 @@ class AuthType(enum.IntEnum):
     RSA_PUBLIC_KEY = 3
 
 
-class SystemType(enum.Enum):
+class SystemType(enum.Enum):  # pylint: disable=too-few-public-methods
     """
     Enumeration for "systemtype" values used by the ADB protocol for the "system-identity-string"
     value in a CONNECT message.
