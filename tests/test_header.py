@@ -45,7 +45,7 @@ def test_header_property_check_matches_command_type(property_name_with_command):
     return :bool:`~True` as expected.
     """
     name, value = property_name_with_command
-    instance = _header(value)
+    instance = header.new(value)
     assert getattr(instance, name)
 
 
@@ -55,12 +55,5 @@ def test_header_property_check_matches_command_response_type(property_name_with_
     return :bool:`~True` as expected.
     """
     name, value = property_name_with_command_response
-    instance = _header(value)
+    instance = header.new(value)
     assert getattr(instance, name)
-
-
-def _header(command=None, arg0=None, arg1=None, data_length=None, data_checksum=None, magic=None):
-    """
-    Helper function that creates :class:`~adbwp.header.Header` instances with default values.
-    """
-    return header.Header(command, arg0, arg1, data_length, data_checksum, magic)

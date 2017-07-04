@@ -113,6 +113,28 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.CommandResponse.FAIL
 
 
+def new(command: hints.Command, arg0: int=0, arg1: int=0, data_length: int=0, data_checksum: int=0, magic: int=0):
+    """
+    Create a new :class:`~adbwp.header.Header` instance with optional default values.
+
+    :param command: Command identifier
+    :type command: :class:`~adbwp.enums.Command` or :class:`~int`
+    :param arg0: (Optional) First argument of the command
+    :type arg0: :class:`~int`
+    :param arg1: (Optional) Second argument of the command
+    :type arg1: :class:`~int`
+    :param data_length: (Optional) Length of the payload
+    :type data_length: :class:`~int`
+    :param data_checksum: (Optional) Computed checksum of the payload
+    :type data_checksum: :class:`~int`
+    :param magic: (Optional) "Magic" XOR of the command
+    :type magic: :class:`~int`
+    :return: Header instance created from values
+    :rtype: :class:`~adbwp.header.Header`
+    """
+    return Header(command, arg0, arg1, data_length, data_checksum, magic)
+
+
 def to_bytes(header: Header) -> bytes:
     """
     Create a :class:`~bytes` from the given :class:`~adbwp.header.Header`.
@@ -144,4 +166,4 @@ def from_bytes(header: bytes) -> Header:
     except struct.error:
         raise exceptions.UnpackError('Failed to unpack header from bytes')
     else:
-        return Header(enums.Command(command), arg0, arg1, data_length, data_checksum, magic)
+        return new(enums.Command(command), arg0, arg1, data_length, data_checksum, magic)
