@@ -6,7 +6,7 @@
 """
 import pytest
 
-from adbwp import enums, header
+from adbwp import consts, enums, header
 
 
 #: Names of properties on the :class:`~adbwp.header.Header` class that shortcut checks for determining
@@ -57,3 +57,10 @@ def test_header_property_check_matches_command_response_type(property_name_with_
     name, value = property_name_with_command_response
     instance = header.new(value)
     assert getattr(instance, name)
+
+
+def test_header_magic_computes_command_xor(command_type):
+    """
+    Assert that :func:`~adbwp.header.magic` XOR's the command value will :attr:`~adbwp.consts.COMMAND_MASK`.
+    """
+    assert header.magic(command_type) == command_type ^ consts.COMMAND_MASK

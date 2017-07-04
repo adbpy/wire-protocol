@@ -7,7 +7,7 @@
 import struct
 import typing
 
-from . import enums, exceptions, hints
+from . import consts, enums, exceptions, hints
 
 
 #: Struct pack/unpack string for handling six unsigned integers that represent a header.
@@ -133,6 +133,30 @@ def new(command: hints.Command, arg0: int=0, arg1: int=0, data_length: int=0, da
     :rtype: :class:`~adbwp.header.Header`
     """
     return Header(command, arg0, arg1, data_length, data_checksum, magic)
+
+
+def magic(command: hints.Command) -> int:
+    """
+    Compute the magic value of a header that uses the given command.
+
+    :param command: Header command
+    :type command: :class:`~adbwp.enums.Command` or :class:`~int`
+    :return: Magic value
+    :rtype: :class:`~int`
+    """
+    return command ^ consts.COMMAND_MASK
+
+
+def checksum(data: bytes) -> int:
+    """
+    Compute the checksum value of a header that uses the given data payload.
+
+    :param data: Data payload
+    :type data: :class:`~bytes`
+    :return: Data payload checksum
+    :rtype: :class:`~int`
+    """
+    return sum(data) & consts.COMMAND_MASK
 
 
 def to_bytes(header: Header) -> bytes:
