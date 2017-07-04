@@ -28,7 +28,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a connect message.
 
         :return: Bool indicating if it is a connect message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.CNXN
 
@@ -48,7 +48,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a open message.
 
         :return: Bool indicating if it is a open message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.OPEN
 
@@ -58,7 +58,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a ready message.
 
         :return: Bool indicating if it is a ready message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.OKAY
 
@@ -68,7 +68,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a write message.
 
         :return: Bool indicating if it is a write message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.WRTE
 
@@ -78,7 +78,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a close message.
 
         :return: Bool indicating if it is a close message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.CLSE
 
@@ -88,7 +88,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a sync message.
 
         :return: Bool indicating if it is a sync message or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.Command.SYNC
 
@@ -98,7 +98,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents an okay response.
 
         :return: Bool indicating if it is an okay response or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.CommandResponse.OKAY
 
@@ -108,7 +108,7 @@ class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', i
         Indicates whether or not this header represents a fail response.
 
         :return: Bool indicating if it is a fail response or not.
-        :type: :class:`~bool`
+        :rtype: :class:`~bool`
         """
         return self.command == enums.CommandResponse.FAIL
 
