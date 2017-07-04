@@ -7,14 +7,14 @@
 import struct
 import typing
 
-from . import enums, exceptions
+from . import enums, exceptions, hints
 
 
 #: Struct pack/unpack string for handling six unsigned integers that represent a header.
 HEADER_FORMAT = '<6I'
 
 
-class Header(typing.NamedTuple('Header', [('command', enums.Command), ('arg0', int), ('arg1', int),
+class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', int), ('arg1', int),
                                           ('data_length', int), ('data_checksum', int), ('magic', int)])):
     """
     Represents the header of an ADB protocol message.
