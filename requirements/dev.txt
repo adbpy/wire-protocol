@@ -1,0 +1,9 @@
+# adbwp/requirements/dev.txt
+#
+# Requirements for using developing package.
+
+-r base.txt
+
+bumpversion==0.5.3
+mypy==0.511
+pylint==1.7.2
