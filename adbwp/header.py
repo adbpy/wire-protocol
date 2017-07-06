@@ -148,18 +148,6 @@ def magic(command: hints.Command) -> int:
     return command ^ consts.COMMAND_MASK
 
 
-def checksum(data: bytes) -> int:
-    """
-    Compute the checksum value of a header that uses the given data payload.
-
-    :param data: Data payload
-    :type data: :class:`~bytes`
-    :return: Data payload checksum
-    :rtype: :class:`~int`
-    """
-    return sum(data) & consts.COMMAND_MASK
-
-
 def to_bytes(header: Header) -> bytes:
     """
     Create a :class:`~bytes` from the given :class:`~adbwp.header.Header`.
