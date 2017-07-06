@@ -22,7 +22,7 @@ def command_type(request):
 def random_header(command_type, random_arg0, random_arg1, random_data_length,
                   random_data_checksum, command_type_magic):
     """
-    Fixture that yields a :class:`~adbwp.header.Header` instance for each :enum:`~adbwp.enums.Command`
+    Fixture that yields a :class:`~adbwp.header.Header` instance for each :class:`~adbwp.enums.Command`
     type and with random values.
     """
     return header.new(command_type, random_arg0, random_arg1, random_data_length,

@@ -147,7 +147,7 @@ def test_header_from_bytes_raises_on_more_than_24_bytes(invalid_bytes_too_many):
 def test_header_from_bytes_converts_command_to_enum(random_header_bytes):
     """
     Assert that :func:`~adbwp.header.from_bytes` converts the command bytes to a
-    :enum:`~adbwp.enums.Command` instance.
+    :class:`~adbwp.enums.Command` instance.
     """
     instance_from_bytes = header.from_bytes(random_header_bytes)
     assert isinstance(instance_from_bytes.command, enums.Command)
