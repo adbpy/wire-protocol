@@ -27,6 +27,9 @@ class CommandResponse(enum.Enum):  # pylint: disable=too-few-public-methods
     OKAY = 'OKAY'
     FAIL = 'FAIL'
 
+    def __str__(self):
+        return str(self.value)
+
 
 class AuthType(enum.IntEnum):
     """
@@ -45,3 +48,6 @@ class SystemType(enum.Enum):  # pylint: disable=too-few-public-methods
     BOOTLOADER = 'bootloader'
     DEVICE = 'device'
     HOST = 'host'
+
+    def __str__(self):
+        return str(self.value)
