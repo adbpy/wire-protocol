@@ -6,14 +6,65 @@
 """
 import pytest
 import random
+import string
+import sys
 
-from adbwp import enums, header
+from adbwp import enums, header, payload
 
 
 @pytest.fixture(scope='session', params=enums.Command)
 def command_type(request):
     """
     Fixture that yields all :class:`~adbwp.enums.Command` types.
+    """
+    return request.param
+
+
+@pytest.fixture(scope='session', params=enums.SystemType)
+def system_type(request):
+    """
+    Fixture that yields all :class:`~adbwp.enums.SystemType` types.
+    """
+    return request.param
+
+
+@pytest.fixture(scope='session', params=[
+    b'foo',
+    b'foobar',
+    'foo',
+    'foobar',
+    bytearray(b'foo'),
+    bytearray(b'foobar'),
+    memoryview(b'foobar'),
+    memoryview(b'foobar'),
+    int(1024).to_bytes(4, byteorder='little'),
+    sys.maxsize.to_bytes(8, byteorder='little')
+])
+def valid_payload(request):
+    """
+    Fixture that yields valid data payload values.
+    """
+    return request.param
+
+
+@pytest.fixture(scope='session')
+def valid_payload_bytes(valid_payload):
+    """
+    Fixture that yields valid data payloads as :class:`~bytes`.
+    """
+    return payload.as_bytes(valid_payload)
+
+
+@pytest.fixture(scope='session', params=[
+    int(),
+    list(),
+    set(),
+    dict(),
+    tuple()
+])
+def invalid_payload_type(request):
+    """
+    Fixture that yields data payload values of unsupported types.
     """
     return request.param
 
