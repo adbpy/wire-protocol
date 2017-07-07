@@ -113,8 +113,8 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.CommandResponse.FAIL
 
 
-def new(command: hints.Command, arg0: int = 0, arg1: int = 0,  # pylint: disable=too-many-arguments,redefined-outer-name
-        data_length: int = 0, data_checksum: int = 0, magic: int = 0) -> Header:
+def new(command: hints.Command, arg0: int=0, arg1: int=0,  # pylint: disable=too-many-arguments,redefined-outer-name
+        data_length: int=0, data_checksum: int=0, magic: int=0) -> Header:
     """
     Create a new :class:`~adbwp.header.Header` instance with optional default values.
 

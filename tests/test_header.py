@@ -92,6 +92,32 @@ def test_header_property_check_matches_command_response_type(property_name_with_
     assert getattr(instance, name)
 
 
+def test_header_new_supports_default_values(command_type):
+    """
+    Assert that :func:`~adbwp.header.new` returns a :class:`~adbwp.header.Header` with the field values
+    set to defaults.
+    """
+    instance = header.new(command_type)
+    assert instance.command == command_type
+    assert instance.arg0 == 0
+    assert instance.arg1 == 0
+    assert instance.data_length == 0
+    assert instance.data_checksum == 0
+
+
+def test_header_new_assigns_fields(command_type, random_arg0, random_arg1, random_data_length, random_data_checksum):
+    """
+    Assert that :func:`~adbwp.header.new` returns a :class:`~adbwp.header.Header` with the field values
+    properly set.
+    """
+    instance = header.new(command_type, random_arg0, random_arg1, random_data_length, random_data_checksum)
+    assert instance.command == command_type
+    assert instance.arg0 == random_arg0
+    assert instance.arg1 == random_arg1
+    assert instance.data_length == random_data_length
+    assert instance.data_checksum == random_data_checksum
+
+
 def test_header_magic_computes_command_xor(command_type):
     """
     Assert that :func:`~adbwp.header.magic` XOR's the command value will :attr:`~adbwp.consts.COMMAND_MASK`.
