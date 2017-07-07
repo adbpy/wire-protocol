@@ -53,3 +53,19 @@ def as_bytes(data: hints.Payload, encoding: str='utf-8', errors: str='strict') -
         return data.tobytes()
 
     raise ValueError('Expected bytes, bytearray, str, or memoryview; got {}'.format(type(data).__name__))
+
+
+def system_identity_string(system_type: hints.SystemType, serial: str, banner: str):
+    """
+    Compute the system identity string data payload.
+
+    :param system_type: System type creating the message
+    :type system_type: :class:`~adbwp.enums.SystemType` or :class:`~str`
+    :param serial: Unique identifier
+    :type serial: :class:`~str`
+    :param banner: Human readable version/identifier string
+    :type banner: :class:`~str`
+    :return: System identity string payload for connect messages
+    :rtype: :class:`~str`
+    """
+    return null_terminate(':'.join((str(system_type), serial, banner)))

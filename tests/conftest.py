@@ -128,6 +128,29 @@ def random_data_checksum():
     return random_int()
 
 
+@pytest.fixture(scope='session')
+def random_serial():
+    """
+    Fixture that yields a random string value that is usable as the "serial" in a connect message.
+    """
+    return random_hex_str(16)
+
+
+@pytest.fixture(scope='session')
+def random_banner():
+    """
+    Fixture that yields a random string value that is usable as the "banner" in a connect message.
+    """
+    return random_hex_str(32)
+
+
+def random_hex_str(length=16):
+    """
+    Helper function that generates a random hex string.
+    """
+    return ''.join((random.choice(string.hexdigits) for _ in range(length)))
+
+
 def random_int(x=0, y=2**31 - 1):
     """
     Helper function that generates a random integer between two values (inclusive).

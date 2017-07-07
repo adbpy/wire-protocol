@@ -6,7 +6,7 @@
 """
 import pytest
 
-from adbwp import header, message, payload
+from adbwp import consts, enums, header, message, payload
 
 
 def test_new_computes_header_data_length_based_on_data_payload(command_type, valid_payload_bytes):
@@ -87,3 +87,23 @@ def test_from_header_raises_on_header_with_incorrect_payload_type(command_type, 
     """
     with pytest.raises(ValueError):
         message.from_header(header.new(command_type), data=invalid_payload_type)
+
+
+def test_connect_assigns_correct_header_field_values():
+    """
+    Assert that :func:`~adbwp.message.connect` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.connect('', '')
+    assert instance.header.command == enums.Command.CNXN
+    assert instance.header.arg0 == consts.VERSION
+    assert instance.header.arg1 == consts.CONNECT_AUTH_MAXDATA
+
+
+def test_connect_sets_system_identity_string_data_payload(random_serial, random_banner, system_type):
+    """
+    Assert that :func:`~adbwp.message.connect` creates a :class:`~adbwp.message.Message` that
+    sets the data payload to a system identity string.
+    """
+    instance = message.connect(random_serial, random_banner, system_type)
+    assert instance.data == payload.system_identity_string(system_type, random_serial, random_banner)

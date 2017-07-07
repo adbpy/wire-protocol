@@ -6,7 +6,7 @@
 """
 import typing
 
-from . import header, hints, payload
+from . import consts, enums, header, hints, payload
 
 
 class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', hints.Payload)])):
@@ -48,3 +48,20 @@ def from_header(header: header.Header, data: hints.Payload=b'') -> Message:  # p
     :rtype: :class:`~adbwp.message.Message`
     """
     return Message(header, payload.as_bytes(data))
+
+
+def connect(serial: str, banner: str, system_type: hints.SystemType = enums.SystemType.HOST) -> Message:
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a connect message.
+
+    :param serial: Unique identifier
+    :type serial: :class:`~str`
+    :param banner: Human readable version/identifier string
+    :type banner: :class:`~str`
+    :param system_type: System type creating the message
+    :type system_type: :class:`~adbwp.enums.SystemType` or :class:`~str`
+    :return: Message used to connect to a remote system
+    :rtype: :class:`~adbwp.message.Message`
+    """
+    system_identity_string = payload.system_identity_string(system_type, serial, banner)
+    return new(enums.Command.CNXN, consts.VERSION, consts.CONNECT_AUTH_MAXDATA, system_identity_string)
