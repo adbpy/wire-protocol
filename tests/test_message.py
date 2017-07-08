@@ -262,3 +262,35 @@ def test_write_raises_on_empty_data_payload(random_local_id, random_remote_id):
     """
     with pytest.raises(ValueError):
         message.write(random_local_id, random_remote_id, b'')
+
+
+def test_close_assigns_correct_header_field_values(random_local_id, random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.close` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.close(random_local_id, random_remote_id)
+    assert instance.header.command == enums.Command.CLSE
+    assert instance.header.arg0 == random_local_id
+    assert instance.header.arg1 == random_remote_id
+
+
+def test_close_assigns_no_data_payload(random_local_id, random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.close` creates a :class:`~adbwp.message.Message` that
+    has no data payload.
+    """
+    expected = b''
+    instance = message.close(random_local_id, random_remote_id)
+    assert instance.header.data_length == len(expected)
+    assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.data == expected
+
+
+def test_close_raises_on_zero_remote_id(random_local_id):
+    """
+    Assert that :func:`~adbwp.message.ready` raises a :class:`~ValueError` when given
+    a local id value that is zero.
+    """
+    with pytest.raises(ValueError):
+        message.close(random_local_id, 0)

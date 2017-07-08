@@ -150,3 +150,22 @@ def write(local_id: int, remote_id: int, data: hints.Payload) -> Message:
         raise ValueError('Data cannot be empty')
 
     return new(enums.Command.WRTE, local_id, remote_id, data)
+
+
+def close(local_id: int, remote_id: int) -> Message:
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a close message.
+
+    :param local_id: Identifier for the stream on the local end
+    :type local_id: :class:`~int`
+    :param remote_id: Identifier for the stream on the remote system
+    :type remote_id: :class:`~int`
+    :return: Message used to inform the remote system of stream closing
+    :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When  id is zero
+    :raises ValueError: When remote id is zero
+    """
+    if not remote_id:
+        raise ValueError('Remote id cannot be zero')
+
+    return new(enums.Command.CLSE, local_id, remote_id)
