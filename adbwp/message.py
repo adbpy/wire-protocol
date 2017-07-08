@@ -91,3 +91,21 @@ def auth_rsa_public_key(public_key: bytes) -> Message:
     :rtype: :class:`~adbwp.message.Message`
     """
     return new(enums.Command.AUTH, enums.AuthType.RSAPUBLICKEY, 0, payload.null_terminate(public_key))
+
+
+def open(local_id: int, destination: str) -> Message:  # pylint: disable=redefined-builtin
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a open message.
+
+    :param local_id: Stream id on remote system to connect with
+    :type local_id: :class:`~int`
+    :param destination: Stream destination
+    :type destination: :class:`~str`
+    :return: Message used to open a stream by id on a remote system
+    :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When local id is zero
+    """
+    if not local_id:
+        raise ValueError('Local id cannot be zero')
+
+    return new(enums.Command.OPEN, local_id, 0, payload.null_terminate(destination))

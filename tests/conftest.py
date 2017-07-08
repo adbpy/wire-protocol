@@ -177,6 +177,22 @@ def random_rsa_public_key():
     return random_bytes(256)
 
 
+@pytest.fixture(scope='session')
+def random_local_id():
+    """
+    Fixture that yields a random int value that is usable as the "local id" in a open message.
+    """
+    return random_int()
+
+
+@pytest.fixture(scope='session')
+def random_destination():
+    """
+    Fixture that yields a random int value that is usable as the "destination" in a open message.
+    """
+    return random_str(12)
+
+
 def random_bytes(length=20):
     """
     Helper function that generates a random collection of bytes.
@@ -188,7 +204,14 @@ def random_hex_str(length=16):
     """
     Helper function that generates a random hex string.
     """
-    return ''.join((random.choice(string.hexdigits) for _ in range(length)))
+    return random_str(length, string.hexdigits)
+
+
+def random_str(length=24, alphabet=string.ascii_letters):
+    """
+    Helper function that generates a random string.
+    """
+    return ''.join((random.choice(alphabet) for _ in range(length)))
 
 
 def random_int(x=0, y=2**31 - 1):

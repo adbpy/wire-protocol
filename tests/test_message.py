@@ -147,3 +147,32 @@ def test_auth_rsa_public_key_sets_public_key_data_payload(random_rsa_public_key)
     """
     instance = message.auth_rsa_public_key(random_rsa_public_key)
     assert instance.data == payload.null_terminate(random_rsa_public_key)
+
+
+def test_open_assigns_correct_header_field_values(random_local_id):
+    """
+    Assert that :func:`~adbwp.message.open` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.open(random_local_id, '')
+    assert instance.header.command == enums.Command.OPEN
+    assert instance.header.arg0 == random_local_id
+    assert instance.header.arg1 == 0
+
+
+def test_open_sets_destination_data_payload(random_local_id, random_destination):
+    """
+    Assert that :func:`~adbwp.message.open` creates a :class:`~adbwp.message.Message` that
+    sets the data payload to the given stream destination.
+    """
+    instance = message.open(random_local_id, random_destination)
+    assert instance.data == payload.null_terminate(random_destination)
+
+
+def test_open_raises_on_zero_local_id(random_destination):
+    """
+    Assert that :func:`~adbwp.message.open` raises a :class:`~ValueError` when given
+    a local id value that is zero.
+    """
+    with pytest.raises(ValueError):
+        message.open(0, random_destination)
