@@ -182,7 +182,7 @@ def random_local_id():
     """
     Fixture that yields a random int value that is usable as the "local id" in a open message.
     """
-    return random_int()
+    return random_int(low=1)
 
 
 @pytest.fixture(scope='session')
@@ -190,7 +190,7 @@ def random_remote_id():
     """
     Fixture that yields a random int value that is usable as the "remote id" in a ready message.
     """
-    return random_int()
+    return random_int(low=1)
 
 
 @pytest.fixture(scope='session')
@@ -222,8 +222,8 @@ def random_str(length=24, alphabet=string.ascii_letters):
     return ''.join((random.choice(alphabet) for _ in range(length)))
 
 
-def random_int(x=0, y=2**31 - 1):
+def random_int(low=0, high=2**31 - 1):
     """
     Helper function that generates a random integer between two values (inclusive).
     """
-    return random.randint(x, y)
+    return random.randint(low, high)
