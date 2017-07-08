@@ -37,7 +37,7 @@ class AuthType(enum.IntEnum):
     """
     TOKEN = 1
     SIGNATURE = 2
-    RSA_PUBLIC_KEY = 3
+    RSAPUBLICKEY = 3
 
 
 class SystemType(enum.Enum):  # pylint: disable=too-few-public-methods

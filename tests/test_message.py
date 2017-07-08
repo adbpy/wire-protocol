@@ -107,3 +107,43 @@ def test_connect_sets_system_identity_string_data_payload(random_serial, random_
     """
     instance = message.connect(random_serial, random_banner, system_type)
     assert instance.data == payload.system_identity_string(system_type, random_serial, random_banner)
+
+
+def test_auth_signature_assigns_correct_header_field_values():
+    """
+    Assert that :func:`~adbwp.message.auth_signature` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.auth_signature(b'')
+    assert instance.header.command == enums.Command.AUTH
+    assert instance.header.arg0 == enums.AuthType.SIGNATURE
+    assert instance.header.arg1 == 0
+
+
+def test_auth_signature_sets_signature_data_payload(random_signature):
+    """
+    Assert that :func:`~adbwp.message.auth_signature` creates a :class:`~adbwp.message.Message` that
+    sets the data payload to the given signature bytes.
+    """
+    instance = message.auth_signature(random_signature)
+    assert instance.data == random_signature
+
+
+def test_auth_rsa_public_key_assigns_correct_header_field_values():
+    """
+    Assert that :func:`~adbwp.message.auth_rsa_public_key` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.auth_rsa_public_key(b'')
+    assert instance.header.command == enums.Command.AUTH
+    assert instance.header.arg0 == enums.AuthType.RSAPUBLICKEY
+    assert instance.header.arg1 == 0
+
+
+def test_auth_rsa_public_key_sets_public_key_data_payload(random_rsa_public_key):
+    """
+    Assert that :func:`~adbwp.message.auth_rsa_public_key` creates a :class:`~adbwp.message.Message` that
+    sets the data payload to the given RSA public key bytes.
+    """
+    instance = message.auth_rsa_public_key(random_rsa_public_key)
+    assert instance.data == payload.null_terminate(random_rsa_public_key)

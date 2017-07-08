@@ -65,3 +65,29 @@ def connect(serial: str, banner: str, system_type: hints.SystemType = enums.Syst
     """
     system_identity_string = payload.system_identity_string(system_type, serial, banner)
     return new(enums.Command.CNXN, consts.VERSION, consts.CONNECT_AUTH_MAXDATA, system_identity_string)
+
+
+def auth_signature(signature: bytes) -> Message:
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a signature
+    authentication message.
+
+    :param signature: Signed data payload
+    :type signature: :class:`~bytes`
+    :return: Message used to verify key pair
+    :rtype: :class:`~adbwp.message.Message`
+    """
+    return new(enums.Command.AUTH, enums.AuthType.SIGNATURE, 0, signature)
+
+
+def auth_rsa_public_key(public_key: bytes) -> Message:
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a RSA public key
+    authentication message.
+
+    :param public_key: Public key for remote system to conditionally accept
+    :type public_key: :class:`~bytes`
+    :return: Message used to share public key
+    :rtype: :class:`~adbwp.message.Message`
+    """
+    return new(enums.Command.AUTH, enums.AuthType.RSAPUBLICKEY, 0, payload.null_terminate(public_key))

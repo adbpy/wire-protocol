@@ -4,6 +4,7 @@
 
     High level fixtures used across multiple test modules.
 """
+import os
 import pytest
 import random
 import string
@@ -24,6 +25,14 @@ def command_type(request):
 def system_type(request):
     """
     Fixture that yields all :class:`~adbwp.enums.SystemType` types.
+    """
+    return request.param
+
+
+@pytest.fixture(scope='session', params=enums.AuthType)
+def auth_type(request):
+    """
+    Fixture that yields all :class:`~adbwp.enums.AuthType` types.
     """
     return request.param
 
@@ -142,6 +151,37 @@ def random_banner():
     Fixture that yields a random string value that is usable as the "banner" in a connect message.
     """
     return random_hex_str(32)
+
+
+@pytest.fixture(scope='session')
+def random_signature():
+    """
+    Fixture that yields a random bytes value that is usable as the "signature" in a auth message.
+    """
+    return random_bytes(20)
+
+
+@pytest.fixture(scope='session')
+def random_signature():
+    """
+    Fixture that yields a random bytes value that is usable as the "signature" in a auth message.
+    """
+    return random_bytes(20)
+
+
+@pytest.fixture(scope='session')
+def random_rsa_public_key():
+    """
+    Fixture that yields a random bytes value that is usable as the "rsa public key" in a auth message.
+    """
+    return random_bytes(256)
+
+
+def random_bytes(length=20):
+    """
+    Helper function that generates a random collection of bytes.
+    """
+    return os.urandom(length)
 
 
 def random_hex_str(length=16):
