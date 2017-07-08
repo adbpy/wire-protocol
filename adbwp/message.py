@@ -130,3 +130,23 @@ def ready(local_id: int, remote_id: int) -> Message:
         raise ValueError('Remote id cannot be zero')
 
     return new(enums.Command.OKAY, local_id, remote_id)
+
+
+def write(local_id: int, remote_id: int, data: hints.Payload) -> Message:
+    """
+    Create a :class:`~adbwp.adb.Message` instance that represents a write message.
+
+    :param local_id: Identifier for the stream on the local end
+    :type local_id: :class:`~int`
+    :param remote_id: Identifier for the stream on the remote system
+    :type remote_id: :class:`~int`
+    :param data: Data payload sent to the stream
+    :type data: :class:`~bytes`, :class:`~bytearray`, :class:`~str`, or :class:`~memoryview`
+    :return: Message used to write data to remote stream
+    :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is empty
+    """
+    if not data:
+        raise ValueError('Data cannot be empty')
+
+    return new(enums.Command.WRTE, local_id, remote_id, data)

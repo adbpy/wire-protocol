@@ -214,3 +214,32 @@ def test_ready_raises_on_zero_remote_id(random_local_id):
     """
     with pytest.raises(ValueError):
         message.ready(random_local_id, 0)
+
+
+def test_write_assigns_correct_header_field_values(random_local_id, random_remote_id, valid_payload):
+    """
+    Assert that :func:`~adbwp.message.write` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.write(random_local_id, random_remote_id, valid_payload)
+    assert instance.header.command == enums.Command.WRTE
+    assert instance.header.arg0 == random_local_id
+    assert instance.header.arg1 == random_remote_id
+
+
+def test_write_assigns_given_data_payload(random_local_id, random_remote_id, valid_payload):
+    """
+    Assert that :func:`~adbwp.message.write` creates a :class:`~adbwp.message.Message` that
+    sets the data payload.
+    """
+    instance = message.write(random_local_id, random_remote_id, valid_payload)
+    assert instance.data == payload.as_bytes(valid_payload)
+
+
+def test_write_raises_on_empty_data_payload(random_local_id, random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.write` raises a :class:`~ValueError` when given
+    an empty data payload.
+    """
+    with pytest.raises(ValueError):
+        message.write(random_local_id, random_remote_id, b'')
