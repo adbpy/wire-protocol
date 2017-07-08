@@ -176,3 +176,41 @@ def test_open_raises_on_zero_local_id(random_destination):
     """
     with pytest.raises(ValueError):
         message.open(0, random_destination)
+
+
+def test_ready_assigns_correct_header_field_values(random_local_id, random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.ready` creates a :class:`~adbwp.message.Message` that
+    contains a header with the expected field values.
+    """
+    instance = message.ready(random_local_id, random_remote_id)
+    assert instance.header.command == enums.Command.OKAY
+    assert instance.header.arg0 == random_local_id
+    assert instance.header.arg1 == random_remote_id
+
+
+def test_ready_assigns_empty_data_payload(random_local_id, random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.ready` creates a :class:`~adbwp.message.Message` that
+    does not have a data payload.
+    """
+    instance = message.ready(random_local_id, random_remote_id)
+    assert instance.data == b''
+
+
+def test_ready_raises_on_zero_local_id(random_remote_id):
+    """
+    Assert that :func:`~adbwp.message.ready` raises a :class:`~ValueError` when given
+    a local id value that is zero.
+    """
+    with pytest.raises(ValueError):
+        message.ready(0, random_remote_id)
+
+
+def test_ready_raises_on_zero_remote_id(random_local_id):
+    """
+    Assert that :func:`~adbwp.message.ready` raises a :class:`~ValueError` when given
+    a local id value that is zero.
+    """
+    with pytest.raises(ValueError):
+        message.ready(random_local_id, 0)

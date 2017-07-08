@@ -109,3 +109,24 @@ def open(local_id: int, destination: str) -> Message:  # pylint: disable=redefin
         raise ValueError('Local id cannot be zero')
 
     return new(enums.Command.OPEN, local_id, 0, payload.null_terminate(destination))
+
+
+def ready(local_id: int, remote_id: int) -> Message:
+    """
+    Create a :class:`~adbwp.message.Message` instance that represents a ready message.
+
+    :param local_id: Identifier for the stream on the local end
+    :type local_id: :class:`~int`
+    :param remote_id: Identifier for the stream on the remote system
+    :type remote_id: :class:`~int`
+    :return: Message used to inform remote system it's ready for write messages
+    :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When local id is zero
+    :raises ValueError: When remote id is zero
+    """
+    if not local_id:
+        raise ValueError('Local id cannot be zero')
+    if not remote_id:
+        raise ValueError('Remote id cannot be zero')
+
+    return new(enums.Command.OKAY, local_id, remote_id)

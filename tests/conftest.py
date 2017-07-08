@@ -186,6 +186,14 @@ def random_local_id():
 
 
 @pytest.fixture(scope='session')
+def random_remote_id():
+    """
+    Fixture that yields a random int value that is usable as the "remote id" in a ready message.
+    """
+    return random_int()
+
+
+@pytest.fixture(scope='session')
 def random_destination():
     """
     Fixture that yields a random int value that is usable as the "destination" in a open message.
