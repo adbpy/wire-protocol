@@ -114,8 +114,9 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', h
         return self.command == enums.CommandResponse.FAIL
 
 
+# pylint: disable=redefined-outer-name
 def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data_length: hints.Int=0,
-        data_checksum: hints.Int=0, magic: hints.Int=0) -> Header:  # pylint: disable=redefined-outer-name
+        data_checksum: hints.Int=0, magic: hints.Int=0) -> Header:
     """
     Create a new :class:`~adbwp.header.Header` instance with optional default values.
 
@@ -135,6 +136,7 @@ def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data_lengt
     :rtype: :class:`~adbwp.header.Header`
     """
     return Header(command, arg0, arg1, data_length, data_checksum, magic)
+# pylint: enable=redefined-outer-name
 
 
 def magic(command: hints.Command) -> hints.Int:
