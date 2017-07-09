@@ -161,7 +161,7 @@ def to_bytes(header: Header) -> hints.Bytes:
     :type header: :class:`~adbwp.header.Header`
     :return: Header represented as bytes
     :rtype: :class:`~bytes`
-    :raises :class:`~adbwp.exceptions.PackError` when unable to pack instance into 6 bytes
+    :raises :class:`~adbwp.exceptions.PackError`: when unable to pack instance into 6 bytes
     """
     try:
         return struct.pack(HEADER_FORMAT, *header)
@@ -177,7 +177,7 @@ def from_bytes(header: hints.Bytes) -> Header:
     :type header: :class:`~bytes`
     :return: Bytes converted to a header
     :rtype: :class:`~adbwp.header.Header`
-    :raises :class:`~adbwp.exceptions.UnpackError` when unable to unpack instance from 6 bytes
+    :raises :class:`~adbwp.exceptions.UnpackError`: When unable to unpack instance from bytes
     """
     try:
         command, *args = struct.unpack(HEADER_FORMAT, header)
