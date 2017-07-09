@@ -10,7 +10,7 @@ import random
 import string
 import sys
 
-from adbwp import enums, header, payload
+from adbwp import consts, enums, header, payload
 
 
 @pytest.fixture(scope='session', params=enums.Command)
@@ -76,6 +76,30 @@ def invalid_payload_type(request):
     Fixture that yields data payload values of unsupported types.
     """
     return request.param
+
+
+@pytest.fixture(scope='session')
+def bytes_larger_than_maxdata():
+    """
+    Fixture that yields collection of bytes larger than :attr:`~adbwp.consts.MAXDATA`.
+    """
+    return random_bytes(consts.MAXDATA + 1)
+
+
+@pytest.fixture(scope='session')
+def bytes_larger_than_connect_auth_max_data():
+    """
+    Fixture that yields collection of bytes larger than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`.
+    """
+    return random_bytes(consts.CONNECT_AUTH_MAXDATA + 1)
+
+
+@pytest.fixture(scope='session')
+def str_larger_than_connect_auth_max_data():
+    """
+    Fixture that yields a string larger than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`.
+    """
+    return random_str(consts.CONNECT_AUTH_MAXDATA + 1)
 
 
 @pytest.fixture(scope='session')

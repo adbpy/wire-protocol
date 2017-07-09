@@ -4,9 +4,18 @@
 
     Object representation of a message.
 """
+import collections
 import typing
 
 from . import consts, enums, header, hints, payload
+
+
+#: Mapping of thee :class:`~adbwp.enums.Command` int value to an :class:`~int` that represents
+#: the maximum size of the data payload for the message.
+MAX_DATA_LENGTH_BY_COMMAND = collections.defaultdict(lambda: consts.MAXDATA, {
+    enums.Command.CNXN.value: consts.CONNECT_AUTH_MAXDATA,
+    enums.Command.AUTH.value: consts.CONNECT_AUTH_MAXDATA
+})
 
 
 class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', hints.Payload)])):
@@ -31,9 +40,10 @@ def new(command: hints.Command, arg0: int=0, arg1: int=0, data: hints.Payload=b'
     :type data: :class:`~bytes`, :class:`~bytearray`, :class:`~str`, or :class:`~memoryview`
     :return: Message instance from given values
     :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
     data = payload.as_bytes(data)
-    return Message(header.new(command, arg0, arg1, len(data), payload.checksum(data), header.magic(command)), data)
+    return from_header(header.new(command, arg0, arg1, len(data), payload.checksum(data), header.magic(command)), data)
 
 
 def from_header(header: header.Header, data: hints.Payload=b'') -> Message:  # pylint: disable=redefined-outer-name
@@ -46,8 +56,15 @@ def from_header(header: header.Header, data: hints.Payload=b'') -> Message:  # p
     :type data: :class:`~bytes`, :class:`~bytearray`, :class:`~str`, or :class:`~memoryview`
     :return: Message instance from given values
     :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
-    return Message(header, payload.as_bytes(data))
+    data = payload.as_bytes(data)
+
+    max_data_length = MAX_DATA_LENGTH_BY_COMMAND[header.command]
+    if len(data) > max_data_length:
+        raise ValueError('Data length for {} message cannot be more than {}'.format(header.command, max_data_length))
+
+    return Message(header, data)
 
 
 def connect(serial: str, banner: str, system_type: hints.SystemType = enums.SystemType.HOST) -> Message:
@@ -62,6 +79,7 @@ def connect(serial: str, banner: str, system_type: hints.SystemType = enums.Syst
     :type system_type: :class:`~adbwp.enums.SystemType` or :class:`~str`
     :return: Message used to connect to a remote system
     :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`
     """
     system_identity_string = payload.system_identity_string(system_type, serial, banner)
     return new(enums.Command.CNXN, consts.VERSION, consts.CONNECT_AUTH_MAXDATA, system_identity_string)
@@ -76,6 +94,7 @@ def auth_signature(signature: bytes) -> Message:
     :type signature: :class:`~bytes`
     :return: Message used to verify key pair
     :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`
     """
     return new(enums.Command.AUTH, enums.AuthType.SIGNATURE, 0, signature)
 
@@ -89,6 +108,7 @@ def auth_rsa_public_key(public_key: bytes) -> Message:
     :type public_key: :class:`~bytes`
     :return: Message used to share public key
     :rtype: :class:`~adbwp.message.Message`
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`
     """
     return new(enums.Command.AUTH, enums.AuthType.RSAPUBLICKEY, 0, payload.null_terminate(public_key))
 
@@ -104,6 +124,7 @@ def open(local_id: int, destination: str) -> Message:  # pylint: disable=redefin
     :return: Message used to open a stream by id on a remote system
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When local id is zero
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
     if not local_id:
         raise ValueError('Local id cannot be zero')
@@ -123,6 +144,7 @@ def ready(local_id: int, remote_id: int) -> Message:
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When local id is zero
     :raises ValueError: When remote id is zero
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
     if not local_id:
         raise ValueError('Local id cannot be zero')
@@ -145,6 +167,7 @@ def write(local_id: int, remote_id: int, data: hints.Payload) -> Message:
     :return: Message used to write data to remote stream
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When data payload is empty
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
     if not data:
         raise ValueError('Data cannot be empty')
@@ -164,6 +187,7 @@ def close(local_id: int, remote_id: int) -> Message:
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When  id is zero
     :raises ValueError: When remote id is zero
+    :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
     """
     if not remote_id:
         raise ValueError('Remote id cannot be zero')

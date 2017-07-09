@@ -72,6 +72,15 @@ def test_new_raises_on_incorrect_payload_type(command_type, invalid_payload_type
         message.new(command_type, data=invalid_payload_type)
 
 
+def test_new_raises_on_data_payload_too_large(command_type, bytes_larger_than_maxdata):
+    """
+    Assert that :func:`~adbwp.message.new` raises a :class:`~ValueError` when given a data payload
+    that is larger than :attr:`~adbwp.consts.MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.new(command_type, data=bytes_larger_than_maxdata)
+
+
 def test_from_header_assigns_header(command_type, random_arg0, random_arg1):
     """
     Assert that :func:`~adbwp.message.from_header` sets the :attr:`~adbwp.message.Message.header`
@@ -90,6 +99,15 @@ def test_from_header_raises_on_header_with_incorrect_payload_type(command_type, 
     """
     with pytest.raises(ValueError):
         message.from_header(header.new(command_type), data=invalid_payload_type)
+
+
+def test_from_header_raises_on_data_payload_too_large(command_type, bytes_larger_than_maxdata):
+    """
+    Assert that :func:`~adbwp.message.from_header` raises a :class:`~ValueError` when given a data payload
+    that is larger than :attr:`~adbwp.consts.MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.from_header(header.new(command_type), data=bytes_larger_than_maxdata)
 
 
 def test_connect_assigns_correct_header_field_values():
@@ -116,6 +134,16 @@ def test_connect_sets_system_identity_string_data_payload(random_serial, random_
     assert instance.data == expected
 
 
+def test_connect_raises_on_system_identity_too_large(random_serial, system_type,
+                                                     str_larger_than_connect_auth_max_data):
+    """
+    Assert that :func:`~adbwp.message.connect` raises a :class:`~ValueError` when given a system identity
+    that is larger than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.connect(random_serial, str_larger_than_connect_auth_max_data, system_type)
+
+
 def test_auth_signature_assigns_correct_header_field_values():
     """
     Assert that :func:`~adbwp.message.auth_signature` creates a :class:`~adbwp.message.Message` that
@@ -140,6 +168,15 @@ def test_auth_signature_sets_signature_data_payload(random_signature):
     assert instance.data == expected
 
 
+def test_auth_signature_raises_on_signature_too_large(bytes_larger_than_connect_auth_max_data):
+    """
+    Assert that :func:`~adbwp.message.auth_signature` raises a :class:`~ValueError` when given a signature
+    that is larger than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.auth_signature(bytes_larger_than_connect_auth_max_data)
+
+
 def test_auth_rsa_public_key_assigns_correct_header_field_values():
     """
     Assert that :func:`~adbwp.message.auth_rsa_public_key` creates a :class:`~adbwp.message.Message` that
@@ -162,6 +199,15 @@ def test_auth_rsa_public_key_sets_public_key_data_payload(random_rsa_public_key)
     assert instance.header.data_checksum == payload.checksum(expected)
     assert instance.header.magic == header.magic(enums.Command.AUTH)
     assert instance.data == expected
+
+
+def test_auth_rsa_public_key_raises_on_public_key_too_large(bytes_larger_than_connect_auth_max_data):
+    """
+    Assert that :func:`~adbwp.message.auth_rsa_public_key` raises a :class:`~ValueError` when given a public key
+    that is larger than :attr:`~adbwp.consts.CONNECT_AUTH_MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.auth_rsa_public_key(bytes_larger_than_connect_auth_max_data)
 
 
 def test_open_assigns_correct_header_field_values(random_local_id):
@@ -195,6 +241,15 @@ def test_open_raises_on_zero_local_id(random_destination):
     """
     with pytest.raises(ValueError):
         message.open(0, random_destination)
+
+
+def test_open_raises_on_destination_too_large(random_local_id, bytes_larger_than_maxdata):
+    """
+    Assert that :func:`~adbwp.message.open` raises a :class:`~ValueError` when a destination
+    that is larger than :attr:`~adbwp.consts.MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.open(random_local_id, bytes_larger_than_maxdata)
 
 
 def test_ready_assigns_correct_header_field_values(random_local_id, random_remote_id):
@@ -269,6 +324,15 @@ def test_write_raises_on_empty_data_payload(random_local_id, random_remote_id):
     """
     with pytest.raises(ValueError):
         message.write(random_local_id, random_remote_id, b'')
+
+
+def test_write_raises_on_data_payload_too_large(random_local_id, random_remote_id, bytes_larger_than_maxdata):
+    """
+    Assert that :func:`~adbwp.message.write` raises a :class:`~ValueError` when given a data payload
+    that is larger than :attr:`~adbwp.consts.MAXDATA`.
+    """
+    with pytest.raises(ValueError):
+        message.write(random_local_id, random_remote_id, bytes_larger_than_maxdata)
 
 
 def test_close_assigns_correct_header_field_values(random_local_id, random_remote_id):
