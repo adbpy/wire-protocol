@@ -26,7 +26,7 @@ class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', 
     """
 
 
-def new(command: hints.Command, arg0: int=0, arg1: int=0, data: hints.Payload=b'') -> Message:
+def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hints.Payload=b'') -> Message:
     """
     Create a new :class:`~adbwp.message.Message` instance with optional default values.
 
@@ -67,7 +67,7 @@ def from_header(header: header.Header, data: hints.Payload=b'') -> Message:  # p
     return Message(header, data)
 
 
-def connect(serial: str, banner: str, system_type: hints.SystemType = enums.SystemType.HOST) -> Message:
+def connect(serial: hints.Str, banner: hints.Str, system_type: hints.SystemType=enums.SystemType.HOST) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a connect message.
 
@@ -85,7 +85,7 @@ def connect(serial: str, banner: str, system_type: hints.SystemType = enums.Syst
     return new(enums.Command.CNXN, consts.VERSION, consts.CONNECT_AUTH_MAXDATA, system_identity_string)
 
 
-def auth_signature(signature: bytes) -> Message:
+def auth_signature(signature: hints.Bytes) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a signature
     authentication message.
@@ -99,7 +99,7 @@ def auth_signature(signature: bytes) -> Message:
     return new(enums.Command.AUTH, enums.AuthType.SIGNATURE, 0, signature)
 
 
-def auth_rsa_public_key(public_key: bytes) -> Message:
+def auth_rsa_public_key(public_key: hints.Bytes) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a RSA public key
     authentication message.
@@ -113,7 +113,7 @@ def auth_rsa_public_key(public_key: bytes) -> Message:
     return new(enums.Command.AUTH, enums.AuthType.RSAPUBLICKEY, 0, payload.null_terminate(public_key))
 
 
-def open(local_id: int, destination: str) -> Message:  # pylint: disable=redefined-builtin
+def open(local_id: hints.Int, destination: hints.Str) -> Message:  # pylint: disable=redefined-builtin
     """
     Create a :class:`~adbwp.message.Message` instance that represents a open message.
 
@@ -132,7 +132,7 @@ def open(local_id: int, destination: str) -> Message:  # pylint: disable=redefin
     return new(enums.Command.OPEN, local_id, 0, payload.null_terminate(destination))
 
 
-def ready(local_id: int, remote_id: int) -> Message:
+def ready(local_id: hints.Int, remote_id: hints.Int) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a ready message.
 
@@ -154,7 +154,7 @@ def ready(local_id: int, remote_id: int) -> Message:
     return new(enums.Command.OKAY, local_id, remote_id)
 
 
-def write(local_id: int, remote_id: int, data: hints.Payload) -> Message:
+def write(local_id: hints.Int, remote_id: hints.Int, data: hints.Payload) -> Message:
     """
     Create a :class:`~adbwp.adb.Message` instance that represents a write message.
 
@@ -175,7 +175,7 @@ def write(local_id: int, remote_id: int, data: hints.Payload) -> Message:
     return new(enums.Command.WRTE, local_id, remote_id, data)
 
 
-def close(local_id: int, remote_id: int) -> Message:
+def close(local_id: hints.Int, remote_id: hints.Int) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a close message.
 

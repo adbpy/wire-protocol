@@ -7,7 +7,7 @@
 from . import consts, hints
 
 
-def checksum(data: hints.Payload) -> int:
+def checksum(data: hints.Payload) -> hints.Int:
     """
     Compute the checksum value of a header that uses the given data payload.
 
@@ -19,7 +19,7 @@ def checksum(data: hints.Payload) -> int:
     return sum(as_bytes(data)) & consts.COMMAND_MASK
 
 
-def null_terminate(data: hints.Payload) -> bytes:
+def null_terminate(data: hints.Payload) -> hints.Bytes:
     """
     Null terminate the given data payload.
 
@@ -31,7 +31,7 @@ def null_terminate(data: hints.Payload) -> bytes:
     return as_bytes(data) + b'\0'
 
 
-def as_bytes(data: hints.Payload, encoding: str='utf-8', errors: str='strict') -> bytes:
+def as_bytes(data: hints.Payload, encoding: hints.Str='utf-8', errors: hints.Str='strict') -> hints.Bytes:
     """
     Ensure the given data payload is a :class:`~bytes` instance.
 
@@ -55,7 +55,7 @@ def as_bytes(data: hints.Payload, encoding: str='utf-8', errors: str='strict') -
     raise ValueError('Expected bytes, bytearray, str, or memoryview; got {}'.format(type(data).__name__))
 
 
-def system_identity_string(system_type: hints.SystemType, serial: str, banner: str):
+def system_identity_string(system_type: hints.SystemType, serial: hints.Str, banner: hints.Str):
     """
     Compute the system identity string data payload.
 

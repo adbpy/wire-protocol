@@ -14,8 +14,9 @@ from . import consts, enums, exceptions, hints
 HEADER_FORMAT = '<6I'
 
 
-class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', int), ('arg1', int),
-                                          ('data_length', int), ('data_checksum', int), ('magic', int)])):
+class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', hints.Int),
+                                          ('arg1', hints.Int), ('data_length', hints.Int),
+                                          ('data_checksum', hints.Int), ('magic', hints.Int)])):
     """
     Represents the header of an ADB protocol message.
 
@@ -23,7 +24,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
     """
 
     @property
-    def connect(self) -> bool:
+    def connect(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a connect message.
 
@@ -33,7 +34,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.CNXN
 
     @property
-    def auth(self) -> bool:
+    def auth(self) -> hints.Bool:
         """
         Indicates whether or not this header represents an auth message.
 
@@ -43,7 +44,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.AUTH
 
     @property
-    def open(self) -> bool:
+    def open(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a open message.
 
@@ -53,7 +54,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.OPEN
 
     @property
-    def ready(self) -> bool:
+    def ready(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a ready message.
 
@@ -63,7 +64,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.OKAY
 
     @property
-    def write(self) -> bool:
+    def write(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a write message.
 
@@ -73,7 +74,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.WRTE
 
     @property
-    def close(self) -> bool:
+    def close(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a close message.
 
@@ -83,7 +84,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.CLSE
 
     @property
-    def sync(self) -> bool:
+    def sync(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a sync message.
 
@@ -93,7 +94,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.Command.SYNC
 
     @property
-    def okay(self) -> bool:
+    def okay(self) -> hints.Bool:
         """
         Indicates whether or not this header represents an okay response.
 
@@ -103,7 +104,7 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.CommandResponse.OKAY
 
     @property
-    def fail(self) -> bool:
+    def fail(self) -> hints.Bool:
         """
         Indicates whether or not this header represents a fail response.
 
@@ -113,8 +114,8 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', i
         return self.command == enums.CommandResponse.FAIL
 
 
-def new(command: hints.Command, arg0: int=0, arg1: int=0,  # pylint: disable=too-many-arguments,redefined-outer-name
-        data_length: int=0, data_checksum: int=0, magic: int=0) -> Header:
+def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data_length: hints.Int=0,
+        data_checksum: hints.Int=0, magic: hints.Int=0) -> Header:  # pylint: disable=redefined-outer-name
     """
     Create a new :class:`~adbwp.header.Header` instance with optional default values.
 
@@ -136,7 +137,7 @@ def new(command: hints.Command, arg0: int=0, arg1: int=0,  # pylint: disable=too
     return Header(command, arg0, arg1, data_length, data_checksum, magic)
 
 
-def magic(command: hints.Command) -> int:
+def magic(command: hints.Command) -> hints.Int:
     """
     Compute the magic value of a header that uses the given command.
 
@@ -148,7 +149,7 @@ def magic(command: hints.Command) -> int:
     return command ^ consts.COMMAND_MASK
 
 
-def to_bytes(header: Header) -> bytes:
+def to_bytes(header: Header) -> hints.Bytes:
     """
     Create a :class:`~bytes` from the given :class:`~adbwp.header.Header`.
 
@@ -164,7 +165,7 @@ def to_bytes(header: Header) -> bytes:
         raise exceptions.PackError('Failed to pack header into bytes')
 
 
-def from_bytes(header: bytes) -> Header:
+def from_bytes(header: hints.Bytes) -> Header:
     """
     Create a :class:`~adbwp.header.Header` from the given :class:`~bytes`.
 
