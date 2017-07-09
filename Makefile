@@ -49,6 +49,10 @@ isort:  ## Run isort on the package.
 mypy:  ## Run mypy static analysis checks on the package.
 	@mypy adbwp
 
+.PHONY: pydocstyle
+pydocstyle:  ## Run pydocstyle on the package
+	@pydocstyle adbwp
+
 .PHONY: pylint
 pylint:  ## Run pylint on the package.
 	@pylint --rcfile .pylintrc adbwp
