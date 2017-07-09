@@ -33,5 +33,6 @@ Command = typing.Union[int, enums.Command]  # pylint: disable=invalid-name
 SystemType = typing.Union[str, enums.SystemType]  # pylint: disable=invalid-name
 
 
-#: Type hint that defines multiple types that can represent a message data payload.
-Payload = typing.Union[bytes, bytearray, str, memoryview]  # pylint: disable=invalid-name
+#: Type hint that defines multiple types that can represent a collection of
+#: bytes that can be used to create model types.
+Buffer = typing.Union[bytes, bytearray, str, memoryview]  # pylint: disable=invalid-name

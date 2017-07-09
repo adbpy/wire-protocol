@@ -7,7 +7,7 @@
 from . import consts, hints
 
 
-def checksum(data: hints.Payload) -> hints.Int:
+def checksum(data: hints.Buffer) -> hints.Int:
     """
     Compute the checksum value of a header that uses the given data payload.
 
@@ -19,7 +19,7 @@ def checksum(data: hints.Payload) -> hints.Int:
     return sum(as_bytes(data)) & consts.COMMAND_MASK
 
 
-def null_terminate(data: hints.Payload) -> hints.Bytes:
+def null_terminate(data: hints.Buffer) -> hints.Bytes:
     """
     Null terminate the given data payload.
 
@@ -31,7 +31,7 @@ def null_terminate(data: hints.Payload) -> hints.Bytes:
     return as_bytes(data) + b'\0'
 
 
-def as_bytes(data: hints.Payload, encoding: hints.Str='utf-8', errors: hints.Str='strict') -> hints.Bytes:
+def as_bytes(data: hints.Buffer, encoding: hints.Str='utf-8', errors: hints.Str='strict') -> hints.Bytes:
     """
     Ensure the given data payload is a :class:`~bytes` instance.
 

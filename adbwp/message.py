@@ -17,7 +17,7 @@ MAX_DATA_LENGTH_BY_COMMAND = collections.defaultdict(lambda: consts.MAXDATA, {
 })
 
 
-class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', hints.Payload)])):
+class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', hints.Buffer)])):
     """
     Represents an entire ADB protocol message.
 
@@ -25,7 +25,7 @@ class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', 
     """
 
 
-def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hints.Payload=b'') -> Message:
+def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hints.Buffer=b'') -> Message:
     """
     Create a new :class:`~adbwp.message.Message` instance with optional default values.
 
@@ -45,7 +45,7 @@ def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hint
     return from_header(header.new(command, arg0, arg1, len(data), payload.checksum(data), header.magic(command)), data)
 
 
-def from_header(header: header.Header, data: hints.Payload=b'') -> Message:  # pylint: disable=redefined-outer-name
+def from_header(header: header.Header, data: hints.Buffer=b'') -> Message:  # pylint: disable=redefined-outer-name
     """
     Create a new :class:`~adbwp.message.Message` instance from an existing :class:`~adbwp.header.Header`.
 
@@ -153,7 +153,7 @@ def ready(local_id: hints.Int, remote_id: hints.Int) -> Message:
     return new(enums.Command.OKAY, local_id, remote_id)
 
 
-def write(local_id: hints.Int, remote_id: hints.Int, data: hints.Payload) -> Message:
+def write(local_id: hints.Int, remote_id: hints.Int, data: hints.Buffer) -> Message:
     """
     Create a :class:`~adbwp.adb.Message` instance that represents a write message.
 
