@@ -8,7 +8,6 @@ import typing
 
 from . import enums
 
-
 #: Type hint that is an alias for the built-in :class:`~bytes` type.
 Bytes = bytes  # pylint: disable=invalid-name
 

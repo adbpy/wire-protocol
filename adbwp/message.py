@@ -9,7 +9,6 @@ import typing
 
 from . import consts, enums, header, hints, payload
 
-
 #: Mapping of thee :class:`~adbwp.enums.Command` int value to an :class:`~int` that represents
 #: the maximum size of the data payload for the message.
 MAX_DATA_LENGTH_BY_COMMAND = collections.defaultdict(lambda: consts.MAXDATA, {

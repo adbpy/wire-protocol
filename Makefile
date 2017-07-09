@@ -41,6 +41,10 @@ codeclimate:  ## Run codeclimate analysis.
 		--volume /tmp/cc:/tmp/cc \
 		codeclimate/codeclimate analyze
 
+.PHONY: isort
+isort:  ## Run isort on the package.
+	@isort --recursive --check-only adbwp tests
+
 .PHONY: mypy
 mypy:  ## Run mypy static analysis checks on the package.
 	@mypy adbwp
@@ -50,7 +54,7 @@ pylint:  ## Run pylint on the package.
 	@pylint --rcfile .pylintrc adbwp
 
 .PHONY: lint
-lint:  pylint mypy  ## Run mypy and pylint on the package.
+lint:  pylint mypy isort  ## Run mypy, pylint, and isort on the package.
 
 .PHONY: bump-patch
 bump-patch:  ## Bump package patch version, e.g. 0.0.1 -> 0.0.2.

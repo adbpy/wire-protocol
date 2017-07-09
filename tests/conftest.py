@@ -5,10 +5,11 @@
     High level fixtures used across multiple test modules.
 """
 import os
-import pytest
 import random
 import string
 import sys
+
+import pytest
 
 from adbwp import consts, enums, header, payload
 

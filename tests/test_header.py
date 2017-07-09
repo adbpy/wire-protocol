@@ -5,10 +5,10 @@
     Contains tests for the :mod:`~adbwp.header` module.
 """
 import os
+
 import pytest
 
 from adbwp import consts, enums, exceptions, header
-
 
 #: Names of properties on the :class:`~adbwp.header.Header` class that shortcut checks for determining
 #: the command type.
