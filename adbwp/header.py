@@ -9,6 +9,9 @@ import typing
 
 from . import consts, enums, exceptions, hints
 
+__all__ = ['Header', 'new', 'to_bytes', 'from_bytes']
+
+
 #: Struct pack/unpack string for handling six unsigned integers that represent a header.
 HEADER_FORMAT = '<6I'
 
