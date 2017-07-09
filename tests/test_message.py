@@ -59,6 +59,7 @@ def test_new_assigns_field_values(command_type, random_arg0, random_arg1, valid_
     assert instance.header.arg1 == random_arg1
     assert instance.header.data_length == len(valid_payload_bytes)
     assert instance.header.data_checksum == payload.checksum(valid_payload_bytes)
+    assert instance.header.magic == header.magic(command_type)
     assert instance.data == valid_payload_bytes
 
 
@@ -111,6 +112,7 @@ def test_connect_sets_system_identity_string_data_payload(random_serial, random_
     instance = message.connect(random_serial, random_banner, system_type)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.CNXN)
     assert instance.data == expected
 
 
@@ -134,6 +136,7 @@ def test_auth_signature_sets_signature_data_payload(random_signature):
     instance = message.auth_signature(random_signature)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.AUTH)
     assert instance.data == expected
 
 
@@ -157,6 +160,7 @@ def test_auth_rsa_public_key_sets_public_key_data_payload(random_rsa_public_key)
     instance = message.auth_rsa_public_key(random_rsa_public_key)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.AUTH)
     assert instance.data == expected
 
 
@@ -180,6 +184,7 @@ def test_open_sets_destination_data_payload(random_local_id, random_destination)
     instance = message.open(random_local_id, random_destination)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.OPEN)
     assert instance.data == expected
 
 
@@ -212,6 +217,7 @@ def test_ready_assigns_empty_data_payload(random_local_id, random_remote_id):
     instance = message.ready(random_local_id, random_remote_id)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.OKAY)
     assert instance.data == expected
 
 
@@ -252,6 +258,7 @@ def test_write_assigns_given_data_payload(random_local_id, random_remote_id, val
     instance = message.write(random_local_id, random_remote_id, valid_payload)
     assert instance.header.data_length == len(valid_payload_bytes)
     assert instance.header.data_checksum == payload.checksum(valid_payload_bytes)
+    assert instance.header.magic == header.magic(enums.Command.WRTE)
     assert instance.data == valid_payload_bytes
 
 
@@ -284,6 +291,7 @@ def test_close_assigns_no_data_payload(random_local_id, random_remote_id):
     instance = message.close(random_local_id, random_remote_id)
     assert instance.header.data_length == len(expected)
     assert instance.header.data_checksum == payload.checksum(expected)
+    assert instance.header.magic == header.magic(enums.Command.CLSE)
     assert instance.data == expected
 
 
