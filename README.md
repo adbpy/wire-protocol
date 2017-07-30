@@ -22,7 +22,7 @@ To install wire-protocol from [pip](https://pypi.python.org/pypi/pip):
 
 To install wire-protocol from source:
 ```bash
-    $ git clone git@github.com:adbwp/wire-protocol.git
+    $ git clone git@github.com:adbpy/wire-protocol.git
     $ cd wire-protocol && python setup.py install
 ```
 
