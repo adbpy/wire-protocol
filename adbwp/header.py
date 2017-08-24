@@ -16,6 +16,10 @@ __all__ = ['Header', 'new', 'to_bytes', 'from_bytes']
 HEADER_FORMAT = '<6I'
 
 
+#: Size of header in bytes.
+BYTES = 24
+
+
 class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', hints.Int),
                                           ('arg1', hints.Int), ('data_length', hints.Int),
                                           ('data_checksum', hints.Int), ('magic', hints.Int)])):
