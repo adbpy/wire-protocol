@@ -21,7 +21,8 @@ MAX_DATA_LENGTH_BY_COMMAND = collections.defaultdict(lambda: consts.MAXDATA, {
 })
 
 
-class Message(typing.NamedTuple('Message', [('header', header.Header), ('data', hints.Buffer)])):
+class Message(typing.NamedTuple('Message', [('header', header.Header),  # pylint: disable=inherit-non-class
+                                            ('data', hints.Buffer)])):
     """
     Represents an entire ADB protocol message.
 

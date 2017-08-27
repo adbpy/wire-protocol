@@ -20,9 +20,10 @@ HEADER_FORMAT = '<6I'
 BYTES = 24
 
 
-class Header(typing.NamedTuple('Header', [('command', hints.Command), ('arg0', hints.Int),
-                                          ('arg1', hints.Int), ('data_length', hints.Int),
-                                          ('data_checksum', hints.Int), ('magic', hints.Int)])):
+class Header(typing.NamedTuple('Header', [('command', hints.Command),  # pylint: disable=inherit-non-class
+                                          ('arg0', hints.Int), ('arg1', hints.Int),
+                                          ('data_length', hints.Int), ('data_checksum', hints.Int),
+                                          ('magic', hints.Int)])):
     """
     Represents the header of an ADB protocol message.
 
@@ -141,7 +142,7 @@ def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data_lengt
     :return: Header instance created from values
     :rtype: :class:`~adbwp.header.Header`
     """
-    return Header(command, arg0, arg1, data_length, data_checksum, magic)
+    return Header(command, arg0, arg1, data_length, data_checksum, magic)  # pylint: disable=too-many-function-args
 # pylint: enable=redefined-outer-name
 
 
