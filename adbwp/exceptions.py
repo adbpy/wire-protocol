@@ -22,3 +22,9 @@ class UnpackError(WireProtocolError):
     """
     Exception raised when unable to unpack/deserialize :class:`~bytes` into a model.
     """
+
+
+class ChecksumError(WireProtocolError):
+    """
+    Exception raised when the computed checksum of a data payload does not match the value in the header.
+    """

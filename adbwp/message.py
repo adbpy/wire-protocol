@@ -7,7 +7,7 @@
 import collections
 import typing
 
-from . import consts, enums, header, hints, payload
+from . import consts, enums, exceptions, header, hints, payload
 
 __all__ = ['Message', 'new', 'from_header', 'connect', 'auth_signature', 'auth_rsa_public_key',
            'open', 'ready', 'write', 'close']
@@ -61,12 +61,17 @@ def from_header(header: header.Header, data: hints.Buffer=b'') -> Message:  # py
     :return: Message instance from given values
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
+    :raises :class:`~adbwp.exceptions.ChecksumError`: When data payload checksum doesn't match header checksum
     """
     data = payload.as_bytes(data)
 
     max_data_length = MAX_DATA_LENGTH_BY_COMMAND[header.command]
     if len(data) > max_data_length:
         raise ValueError('Data length for {} message cannot be more than {}'.format(header.command, max_data_length))
+
+    checksum = payload.checksum(data)
+    if header.data_checksum != checksum:
+        raise exceptions.ChecksumError('Expected data checksum {}; got {}'.format(header.data_checksum, checksum))
 
     return Message(header, data)
 
