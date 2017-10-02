@@ -49,6 +49,10 @@ isort:  ## Run isort on the package.
 scan:  ## Run security scan against package dependencies.
 	@safety check
 
+.PHONY: seclint
+seclint:  ## Run Python security linter 'bandit' on package.
+	@bandit -v -r wire-protocol
+
 .PHONY: mypy
 mypy:  ## Run mypy static analysis checks on the package.
 	@mypy adbwp
@@ -64,7 +68,7 @@ ifneq (${TRAVIS_PYTHON_VERSION},nightly)
 endif
 
 .PHONY: lint
-lint:  pylint mypy isort  ## Run mypy, pylint, and isort on the package.
+lint:  pylint mypy seclint isort  ## Run mypy, pylint, seclint, and isort targets.
 
 .PHONY: bump-patch
 bump-patch:  ## Bump package patch version, e.g. 0.0.1 -> 0.0.2.
