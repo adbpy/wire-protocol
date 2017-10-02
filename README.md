@@ -5,6 +5,8 @@
 [![Code Climate](https://codeclimate.com/github/adbpy/wire-protocol/badges/gpa.svg)](https://codeclimate.com/github/adbpy/wire-protocol)
 [![Issue Count](https://codeclimate.com/github/adbpy/wire-protocol/badges/issue_count.svg)](https://codeclimate.com/github/adbpy/wire-protocol)
 
+[![Updates](https://pyup.io/repos/github/adbpy/wire-protocol/shield.svg)](https://pyup.io/repos/github/adbpy/wire-protocol/)
+
 [![Stories in Ready](https://badge.waffle.io/adbpy/wire-protocol.svg?label=ready&title=Ready)](http://waffle.io/adbpy/wire-protocol)
 
 Android Debug Bridge (ADB) Wire Protocol
