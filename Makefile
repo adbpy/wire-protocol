@@ -45,6 +45,10 @@ codeclimate:  ## Run codeclimate analysis.
 isort:  ## Run isort on the package.
 	@isort --recursive --check-only adbwp tests
 
+.PHONY: scan
+scan:  ## Run security scan against package dependencies.
+	@safety check
+
 .PHONY: mypy
 mypy:  ## Run mypy static analysis checks on the package.
 	@mypy adbwp
