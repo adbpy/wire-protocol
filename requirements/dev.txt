@@ -10,3 +10,5 @@ mypy==0.521
 pydocstyle==2.0.0
 pylint==1.6.3
 safety==1.5.1
+bandit==1.4.0
+
