@@ -122,8 +122,8 @@ class Header(typing.NamedTuple('Header', [('command', hints.Command),  # pylint:
 
 
 # pylint: disable=redefined-outer-name
-def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data_length: hints.Int=0,
-        data_checksum: hints.Int=0, magic: hints.Int=0) -> Header:
+def new(command: hints.Command, arg0: hints.Int = 0, arg1: hints.Int = 0, data_length: hints.Int = 0,
+        data_checksum: hints.Int = 0, magic: hints.Int = 0) -> Header:
     """
     Create a new :class:`~adbwp.header.Header` instance with optional default values.
 

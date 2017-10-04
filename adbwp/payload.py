@@ -31,7 +31,7 @@ def null_terminate(data: hints.Buffer) -> hints.Bytes:
     return as_bytes(data) + b'\0'
 
 
-def as_bytes(data: hints.Buffer, encoding: hints.Str='utf-8', errors: hints.Str='strict') -> hints.Bytes:
+def as_bytes(data: hints.Buffer, encoding: hints.Str = 'utf-8', errors: hints.Str = 'strict') -> hints.Bytes:
     """
     Ensure the given data payload is a :class:`~bytes` instance.
 

@@ -30,7 +30,7 @@ class Message(typing.NamedTuple('Message', [('header', header.Header),  # pylint
     """
 
 
-def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hints.Buffer=b'') -> Message:
+def new(command: hints.Command, arg0: hints.Int = 0, arg1: hints.Int = 0, data: hints.Buffer = b'') -> Message:
     """
     Create a new :class:`~adbwp.message.Message` instance with optional default values.
 
@@ -50,7 +50,7 @@ def new(command: hints.Command, arg0: hints.Int=0, arg1: hints.Int=0, data: hint
     return from_header(header.new(command, arg0, arg1, len(data), payload.checksum(data), header.magic(command)), data)
 
 
-def from_header(header: header.Header, data: hints.Buffer=b'') -> Message:  # pylint: disable=redefined-outer-name
+def from_header(header: header.Header, data: hints.Buffer = b'') -> Message:  # pylint: disable=redefined-outer-name
     """
     Create a new :class:`~adbwp.message.Message` instance from an existing :class:`~adbwp.header.Header`.
 
@@ -76,7 +76,7 @@ def from_header(header: header.Header, data: hints.Buffer=b'') -> Message:  # py
     return Message(header, data)
 
 
-def connect(serial: hints.Str, banner: hints.Str, system_type: hints.SystemType=enums.SystemType.HOST) -> Message:
+def connect(serial: hints.Str, banner: hints.Str, system_type: hints.SystemType = enums.SystemType.HOST) -> Message:
     """
     Create a :class:`~adbwp.message.Message` instance that represents a connect message.
 
