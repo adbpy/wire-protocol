@@ -24,6 +24,11 @@ def get_version():
         return str(ast.literal_eval(version_regex.search(f.read()).group(1)))
 
 
+def get_long_description():
+    with open('README.rst') as f:
+        return f.read()
+
+
 setup(
     name='adbwp',
     version=get_version(),
@@ -32,7 +37,7 @@ setup(
     url='https://github.com/adbpy/wire-protocol',
     license='Apache 2.0',
     description='Android Debug Bridge (ADB) Wire Protocol',
-    long_description=__doc__,
+    long_description=get_long_description(),
     packages=['adbwp'],
     classifiers=(
         'Development Status :: 3 - Alpha',
