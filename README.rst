@@ -1,7 +1,7 @@
 wire-protocol
 =============
 
-|Build Status| |Test Coverage| |Code Climate| |Issue Count|
+|Build Status| |codecov| |Code Climate| |Issue Count|
 
 |Updates|
 
@@ -65,8 +65,8 @@ License
 
 .. |Build Status| image:: https://travis-ci.org/adbpy/wire-protocol.svg?branch=master
    :target: https://travis-ci.org/adbpy/wire-protocol
-.. |Test Coverage| image:: https://codeclimate.com/github/adbpy/wire-protocol/badges/coverage.svg
-   :target: https://codeclimate.com/github/adbpy/wire-protocol/coverage
+.. |codecov| image:: https://codecov.io/gh/adbpy/wire-protocol/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/adbpy/wire-protocol
 .. |Code Climate| image:: https://codeclimate.com/github/adbpy/wire-protocol/badges/gpa.svg
    :target: https://codeclimate.com/github/adbpy/wire-protocol
 .. |Issue Count| image:: https://codeclimate.com/github/adbpy/wire-protocol/badges/issue_count.svg
