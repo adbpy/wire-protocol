@@ -72,9 +72,7 @@ pydocstyle:  ## Run pydocstyle on the package
 
 .PHONY: pylint
 pylint:  ## Run pylint on the package.
-ifneq (${TRAVIS_PYTHON_VERSION},nightly)
 	@pylint --rcfile .pylintrc adbwp
-endif
 
 .PHONY: lint
 lint:  pylint mypy seclint isort  ## Run mypy, pylint, seclint, and isort targets.
