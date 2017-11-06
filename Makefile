@@ -112,7 +112,7 @@ clean-pyc:  ## Remove local python cache files.
 
 .PHONY: docs
 docs:  ## Build project documentation.
-	@make -C docs html
+	@make -C docs clean html
 
 .PHONY: readme
 readme:  ## Convert README.md to README.rst used for setup.py.
