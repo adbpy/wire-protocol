@@ -7,6 +7,8 @@
 
 [![Updates](https://pyup.io/repos/github/adbpy/wire-protocol/shield.svg)](https://pyup.io/repos/github/adbpy/wire-protocol/)
 
+[![Documentation Status](https://readthedocs.org/projects/wire-protocol/badge/?version=latest)](http://wire-protocol.readthedocs.io/en/latest/?badge=latest)
+
 [![Stories in Ready](https://badge.waffle.io/adbpy/wire-protocol.svg?label=ready&title=Ready)](http://waffle.io/adbpy/wire-protocol)
 
 Android Debug Bridge (ADB) Wire Protocol
