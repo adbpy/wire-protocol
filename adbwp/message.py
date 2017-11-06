@@ -61,7 +61,7 @@ def from_header(header: header.Header, data: hints.Buffer = b'') -> Message:  # 
     :return: Message instance from given values
     :rtype: :class:`~adbwp.message.Message`
     :raises ValueError: When data payload is greater than :attr:`~adbwp.consts.MAXDATA`
-    :raises :class:`~adbwp.exceptions.ChecksumError`: When data payload checksum doesn't match header checksum
+    :raises ChecksumError: When data payload checksum doesn't match header checksum
     """
     data = payload.as_bytes(data)
 

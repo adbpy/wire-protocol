@@ -2,7 +2,7 @@
     adbwp.consts
     ~~~~~~~~~~~~
 
-    Contains const values used by the protocol.
+    Contains constant values used by the protocol.
 """
 
 #: Protocol version.
