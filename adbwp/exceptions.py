@@ -4,6 +4,7 @@
 
     Contains exception types used across the package.
 """
+__all__ = ['WireProtocolError', 'PackError', 'UnpackError', 'ChecksumError']
 
 
 class WireProtocolError(Exception):
