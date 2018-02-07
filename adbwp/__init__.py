@@ -6,11 +6,9 @@
 """
 # pylint: disable=wildcard-import
 
-from . import exceptions
+from . import exceptions, header, message
 from .exceptions import *
-from . import header
 from .header import Header
-from . import message
 from .message import Message
 
 __all__ = exceptions.__all__ + ['header', 'message', 'Header', 'Message']
