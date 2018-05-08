@@ -20,17 +20,6 @@ script: make travis-script
 after_success: make travis-after-success
 deploy:
 - provider: pypi
-  server: https://test.pypi.org/legacy/
-  user: Andrew.Hawker
-  password:
-    secure: i0pAX2CWDH/0BABu1XwrHqLZLezQuRkVxmymHGkzwOZ7JJ447z+/FKQbQ25IWRmjsLG0k6CfJy9u791OLcHXw/Vn4q4+miHruN+HUcigsWPVtfbUQDfHGx4D7VmoG4LRlZkUBdmqiyaFmwn5RHwuABSFkQ6vJQymRxJ1yk2HMu5aNYuSWMvEYfw0vE15J1sE+5QByNdW6kI27RmtbjcamZxi9N+o8oDtcOshi5XR61yWMc8Pyn+mVMHywnvYCjnx08QXpab72iOszyrTrZS5XeYN1KRr/n9MXllb0qEwbeRVZzHGzgFEcUdIzirxyxMUKYk6QepGZmM6uLo07ynYecg0JcMy2gVaZRWZQ0PYTOfEBckrUsZcIJ5FOtGaRYWzHCZBw13hs+G5Kx/53wOaySWouDGk4NRTZWJFhj6TRYHQm/9r94Jx/Pjs0PVIjNEEJVMzI+m5E6AZoqt8zcIB392/XkTjImpHmuhOL4GPoub04n0G9EC29LafWRh4vGjzHMDuR2rzNxvn7SXO5McF7cOmFYX3RkVVZ3lNBpuJOZqi2+x3nKb8OUkLCgwN6RTne50hxs2lhcmZs56JK7R7bSLW4Vrt3ao4Xiag4JGzQTltxux/zsEZAEVaOQ+94W1gWoHZ3HOAquOFTxmWjISWhtm9+B/vSofoJ1uN80YQEIU=
-  distributions: sdist bdist_wheel
-  skip_cleanup: true
-  on:
-    branch: master
-    tags: false
-    condition: $TRAVIS_PYTHON_VERSION = "3.4"
-- provider: pypi
   server: https://upload.pypi.org/legacy/
   user: Andrew.Hawker
   password:
