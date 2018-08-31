@@ -3,4 +3,4 @@
 # Requirements for using this package.
 
 enum34==1.1.6; python_version < '3.4'
-typing==3.6.4; python_version < '3.6'
+typing==3.6.6; python_version < '3.6'
