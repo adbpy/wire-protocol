@@ -6,7 +6,7 @@
 
 bumpversion==0.5.3
 mypy==0.740
-pydocstyle==3.0.0
+pydocstyle==4.0.1
 pylint==1.7.5; python_version < '3.4'  # pyup: ignore
 pylint==2.2.2; python_version > '3.4'
 safety==1.8.5
