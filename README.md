@@ -9,8 +9,6 @@
 
 [![Documentation Status](https://readthedocs.org/projects/wire-protocol/badge/?version=latest)](http://wire-protocol.readthedocs.io/en/latest/?badge=latest)
 
-[![Stories in Ready](https://badge.waffle.io/adbpy/wire-protocol.svg?label=ready&title=Ready)](http://waffle.io/adbpy/wire-protocol)
-
 Android Debug Bridge (ADB) Wire Protocol
 
 ## Status
