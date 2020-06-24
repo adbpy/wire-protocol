@@ -5,7 +5,7 @@
 -r base.txt
 
 bumpversion==0.5.3
-mypy==0.761
+mypy==0.782
 pydocstyle==5.0.2
 pylint==1.7.5; python_version < '3.4'  # pyup: ignore
 pylint==2.4.4; python_version > '3.4'
