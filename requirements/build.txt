@@ -1,0 +1,5 @@
+# adbwp/requirements/build.txt
+#
+# Requirements necessary to build the adbwp package.
+
+setuptools==49.6.0
