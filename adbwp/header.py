@@ -170,8 +170,8 @@ def to_bytes(header: Header) -> hints.Bytes:
     """
     try:
         return struct.pack(HEADER_FORMAT, *header)
-    except struct.error:
-        raise exceptions.PackError('Failed to pack header into bytes')
+    except struct.error as ex:
+        raise exceptions.PackError('Failed to pack header into bytes') from ex
 
 
 def from_bytes(header: hints.Bytes) -> Header:
@@ -186,7 +186,7 @@ def from_bytes(header: hints.Bytes) -> Header:
     """
     try:
         command, *args = struct.unpack(HEADER_FORMAT, header)
-    except struct.error:
-        raise exceptions.UnpackError('Failed to unpack header from bytes')
+    except struct.error as ex:
+        raise exceptions.UnpackError('Failed to unpack header from bytes') from ex
     else:
         return new(enums.Command(command), *args)
