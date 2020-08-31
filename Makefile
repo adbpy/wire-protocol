@@ -30,7 +30,7 @@ travis-install:  ## Install dependencies for travis-ci.org integration.
 
 .PHONY: travis-before-script
 travis-before-script: travis-install  ## Entry point for travis-ci.org 'before_script' execution.
-	@curl https://codecov.io/bash > ./codecov
+	@curl -v https://codecov.io/bash > ./codecov
 	@chmod +x ./codecov
 
 .PHONY: travis-script
