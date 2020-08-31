@@ -3,11 +3,7 @@ wire-protocol
 
 |Build Status| |codecov| |Code Climate| |Issue Count|
 
-|Updates|
-
 |Documentation Status|
-
-|Stories in Ready|
 
 Android Debug Bridge (ADB) Wire Protocol
 
@@ -24,14 +20,14 @@ To install wire-protocol from
 
 .. code:: bash
 
-        $ pip install adbwp
+       $ pip install adbwp
 
 To install wire-protocol from source:
 
 .. code:: bash
 
-        $ git clone git@github.com:adbpy/wire-protocol.git
-        $ cd wire-protocol && python setup.py install
+       $ git clone git@github.com:adbpy/wire-protocol.git
+       $ cd wire-protocol && python setup.py install
 
 Goals/Scope
 -----------
@@ -46,11 +42,11 @@ protocol should care about:
 
 The wire protocol should not care, nor have concept of:
 
--  Synchronous vs. Asynchronous
+-  Synchronous vs. Asynchronous
 -  TCP, UDP, USB
--  Sequence of messages required to complete a connection "handshake"
+-  Sequence of messages required to complete a connection “handshake”
 -  Cryptography required to verify endpoints
--  Anything else not explicitly mentioned above...
+-  Anything else not explicitly mentioned above…
 
 Contributing
 ------------
@@ -73,9 +69,5 @@ License
    :target: https://codeclimate.com/github/adbpy/wire-protocol
 .. |Issue Count| image:: https://codeclimate.com/github/adbpy/wire-protocol/badges/issue_count.svg
    :target: https://codeclimate.com/github/adbpy/wire-protocol
-.. |Updates| image:: https://pyup.io/repos/github/adbpy/wire-protocol/shield.svg
-   :target: https://pyup.io/repos/github/adbpy/wire-protocol/
 .. |Documentation Status| image:: https://readthedocs.org/projects/wire-protocol/badge/?version=latest
    :target: http://wire-protocol.readthedocs.io/en/latest/?badge=latest
-.. |Stories in Ready| image:: https://badge.waffle.io/adbpy/wire-protocol.svg?label=ready&title=Ready
-   :target: http://waffle.io/adbpy/wire-protocol
