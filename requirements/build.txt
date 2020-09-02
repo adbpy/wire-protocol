@@ -3,4 +3,4 @@
 # Requirements necessary to build the adbwp package.
 
 pipenv==2020.8.13
-setuptools==49.6.0
+setuptools==50.0.3
